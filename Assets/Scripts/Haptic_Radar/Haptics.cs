@@ -50,7 +50,8 @@ public class Haptics : MonoBehaviour
         {
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
             print("Dist to Closest: " + _distToClosest);
-            Pulse(1, 0.2f, 100f, 1f - (_distToClosest / 10), SteamVR_Input_Sources.LeftHand);
+            //todo fix this math, apply _distToClosest to frequency AND amplitude, find some way to make amplitude inversely quadratic within bounds
+            Pulse(1, 0.2f, 100f, Mathf.Clamp(1f - (_distToClosest / 10),0f,1f), SteamVR_Input_Sources.LeftHand);
             yield return new WaitForSeconds(0.5f);
         }
     }
