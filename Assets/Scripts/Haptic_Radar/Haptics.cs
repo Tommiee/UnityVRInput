@@ -24,17 +24,20 @@ public class Haptics : MonoBehaviour
         _objectFinder = gameObject.GetComponent<FindObject>();
     }
 
+
+    //todo: make this run on event listeners instead of in update
+
     void Update()
     {
 		if(grabPinchAction.GetStateDown(SteamVR_Input_Sources.LeftHand)){
-			Pulse(2,0.2f,200f,0.1f,SteamVR_Input_Sources.LeftHand);
+			Pulse(2, 0.2f, 200f, 0.1f, SteamVR_Input_Sources.LeftHand);
             _closest = _objectFinder.FindClosestTarget(_player, _tag);
             StartCoroutine(Radar(_closest, _player));
         }
         if (grabPinchAction.GetStateUp(SteamVR_Input_Sources.LeftHand))
         {
             Pulse(2, 0.2f, 75f, 0.1f, SteamVR_Input_Sources.LeftHand);
-            StopCoroutine(Radar(_closest, _player, true));
+            StopAllCoroutines();
         }
     }
 
@@ -50,7 +53,7 @@ public class Haptics : MonoBehaviour
         {
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
             print("Dist to Closest: " + _distToClosest);
-            //todo fix this math, apply _distToClosest to frequency AND amplitude, find some way to make amplitude inversely quadratic within bounds
+            //todo: apply _distToClosest to frequency AND amplitude, make amplitude inversely quadratic within clamp
             Pulse(1, 0.2f, 100f, Mathf.Clamp(1f - (_distToClosest / 10),0f,1f), SteamVR_Input_Sources.LeftHand);
             yield return new WaitForSeconds(0.5f);
         }
