@@ -34,7 +34,7 @@ public class Haptics : MonoBehaviour
         if (grabPinchAction.GetStateUp(SteamVR_Input_Sources.LeftHand))
         {
             Pulse(2, 0.2f, 75f, 0.1f, SteamVR_Input_Sources.LeftHand);
-            StopCoroutine(Radar(_closest, _player));
+            StopCoroutine(Radar(_closest, _player, true));
         }
     }
 
@@ -44,9 +44,9 @@ public class Haptics : MonoBehaviour
 		}
 	}
 
-    IEnumerator Radar(GameObject _obj, GameObject _player)
+    IEnumerator Radar(GameObject _obj, GameObject _player, bool _stop = false)
     {
-        while (true)
+        while (!_stop)
         {
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
             print("Dist to Closest: " + _distToClosest);
