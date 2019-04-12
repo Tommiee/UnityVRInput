@@ -5,7 +5,6 @@ using Valve.VR;
 
 public class Haptics : MonoBehaviour
 {
-
     public SteamVR_Action_Vibration _hapticOutput;
 	public SteamVR_Action_Boolean _buttonAction;
 
@@ -14,6 +13,7 @@ public class Haptics : MonoBehaviour
 
     [SerializeField]
     private string _tag;
+
     [SerializeField]
     private GameObject _controller;
 
@@ -37,26 +37,30 @@ public class Haptics : MonoBehaviour
         }
     }
 
-	IEnumerator Pulse(int pulseAmount, float duration, float frequency, float amplitude, SteamVR_Input_Sources source){
-		for(int i = 0; i < pulseAmount; i++){
-			_hapticOutput.Execute(0,duration,frequency,amplitude,source);
-            yield return new WaitForSeconds(duration+0.05f);
+	IEnumerator Pulse(int _pulseAmount, float _duration, float _frequency, float _amplitude, SteamVR_Input_Sources _source)
+    {
+		for(int i = 0; i < _pulseAmount; i++)
+        {
+			_hapticOutput.Execute(0, _duration, _frequency, _amplitude,_source);
+            yield return new WaitForSeconds(_duration + 0.1f);
 		}
         yield break;
 	}
 
-    IEnumerator Radar(GameObject _obj, GameObject _player, SteamVR_Input_Sources source)
+    IEnumerator Radar(GameObject _obj, GameObject _player, SteamVR_Input_Sources _source)
     {
         while (!false)
         {
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
             if(_distToClosest >= 0.1)
             {
-                StartCoroutine(Pulse(1, 0.2f, Mathf.Clamp(Mathf.Round(320f / _distToClosest), 1, 320), Mathf.Clamp(1f - (_distToClosest / 10), 0f, 1f), source));
+                float _freq = Mathf.Clamp(Mathf.Round(320f / _distToClosest), 1, 320);
+                float _amp = Mathf.Clamp(1f - (_distToClosest / 10), 0f, 1f);
+                StartCoroutine(Pulse(1, 0.2f, _freq, _amp, _source));
                 yield return new WaitForSeconds(0.75f);
             } else
             {
-                StartCoroutine(Pulse(2, 0.5f, 50f, 1f, source));
+                StartCoroutine(Pulse(2, 0.5f, 50f, 1f, _source));
                 yield break;
             }
         }
