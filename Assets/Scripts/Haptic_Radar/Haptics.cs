@@ -19,12 +19,9 @@ public class Haptics : MonoBehaviour
 
     private FindObject _objectFinder;
 
-    private CheckCollision _checkCollision;
-
     private void Start()
     {
         _objectFinder = gameObject.AddComponent<FindObject>();
-        _checkCollision = gameObject.AddComponent<CheckCollision>();
         _buttonAction.AddOnChangeListener(ButtonTriggered, SteamVR_Input_Sources.LeftHand);
     }
 
