@@ -20,7 +20,7 @@ public class HiddenLayer : State<InteractionStates>
 
     public override void Init()
     {
-        Ray.enabled = false;
+        //Ray.enabled = false;
     }
 
     public override void Apply(float amount) {

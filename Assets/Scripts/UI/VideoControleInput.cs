@@ -26,15 +26,13 @@ public class VideoControleInput : MonoBehaviour
 
     private void TouchpadButtonsControler()
     {
-        
-
         if (SteamVR_Actions._default.Teleport.GetStateDown(Hand))
         {
             Vector2 trackpad = SteamVR_Actions._default.touchpadtouch.GetAxis(Hand);
             float _touchPadPositionX = trackpad.x;
             //float _touchPadPositionY = trackpad.y;
 
-            print(_touchPadPositionX + ">>" + trackpad);
+            //print(_touchPadPositionX + ">>" + trackpad);
             if (_touchPadPositionX < -0.5f)
             {
                 _video.Rewind();

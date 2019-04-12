@@ -3,88 +3,90 @@ using UnityEngine;
 using UnityEngine.Video;
 
 public class Video : MonoBehaviour {
-	private VideoPlayer videoPlayer;
-	
-	[SerializeField]
-	private VideoClip _video;
-	private bool _rewind = false;
+    private VideoPlayer videoPlayer;
 
-	void Start() {
-		StartCoroutine(PlayVideo());
-	}
+    [SerializeField]
+    private VideoClip _video;
+    private bool _rewind = false;
 
-	IEnumerator PlayVideo() {
-		GameObject videoObject = GameObject.Find("VideoObject");
-		videoPlayer = videoObject.AddComponent<VideoPlayer>();
-		videoPlayer.playOnAwake = false;
-		videoPlayer.clip = _video;
-		videoPlayer.Prepare();
-		videoPlayer.SetDirectAudioMute(0, true);
+    void Start() {
+        StartCoroutine(PlayVideo());
+    }
 
-		
+    IEnumerator PlayVideo() {
+        GameObject videoObject = GameObject.Find("VideoObject");
+        videoPlayer = videoObject.AddComponent<VideoPlayer>();
+        videoPlayer.playOnAwake = false;
+        videoPlayer.clip = _video;
+        videoPlayer.Prepare();
+        //videoPlayer.SetDirectAudioMute(0, true);
 
-		while (!videoPlayer.isPrepared) {
-			Debug.Log("Preparing Video");
-			yield return null;
-		}
 
-		videoPlayer.Play();
 
-		while (videoPlayer.isPlaying) {
-			Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
-			yield return null;
-		}
-	}
+        while (!videoPlayer.isPrepared) {
+            Debug.Log("Preparing Video");
+            yield return null;
+        }
 
-	public void ChangeTime(int seconds) {
-		videoPlayer.time = seconds;
-	}
+        videoPlayer.Play();
 
-	public void Pause() {
-		videoPlayer.Pause();
+        while (videoPlayer.isPlaying) {
+            Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+            yield return null;
+        }
+    }
 
-        if (videoPlayer.isPaused)
-        {
+    public void Normalize() {
+        _rewind = false;
+        PlayNormal();
+    }
+
+    public void ChangeTime(int seconds) {
+        videoPlayer.time = seconds;
+    }
+
+    public void Pause() {
+
+        if (videoPlayer.isPaused && !_rewind) {
             Play();
+            return;
         }
-	}
+        videoPlayer.Pause();
+        Normalize();
+    }
 
-	public void Play() {
-		videoPlayer.Play();
-	}
+    public void Play() {
+        videoPlayer.Play();
+    }
 
-	public void Rewind() {
-		if (_rewind) {
-			videoPlayer.Play();
-			_rewind = false;
-		}
+    public void Rewind() {
+        Normalize();
+        _rewind = true;
+        videoPlayer.Pause();
 
-		_rewind = true;
-		videoPlayer.Pause();
+        //videoPlayer.playbackSpeed = -2;
+    }
 
-	}
+    public void PlayNormal() {
+        videoPlayer.playbackSpeed = 1;
 
-	public void PlayNormal() {
-		videoPlayer.playbackSpeed = 1;
-	}
+    }
 
-	public void FastForward() {
-        if(videoPlayer.playbackSpeed == 2)
-        {
-            PlayNormal();
-        } else {
-            videoPlayer.playbackSpeed = 2;
+    public void FastForward() {
+        Normalize();
+        Play();
+        videoPlayer.playbackSpeed = 2;
+    }
+
+    private void Update() {
+        if (_rewind) {
+            videoPlayer.frame--;
+            //videoPlayer.time = videoPlayer.time - Time.deltaTime;
+            // print("rewwind");
         }
-		
-	}
 
-	private void Update() {
-		if (_rewind) {
-			videoPlayer.frame--;
-		}
-
-		if (videoPlayer.frame <= 0) {
+        /*if (videoPlayer.frame <= 0) {
 			_rewind = false;
-		}
-	}
+		}*/
+    }
 }
