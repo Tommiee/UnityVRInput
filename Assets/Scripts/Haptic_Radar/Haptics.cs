@@ -19,13 +19,16 @@ public class Haptics : MonoBehaviour
 
     private FindObject _objectFinder;
 
+    private CheckCollision _checkCollision;
+
     private void Start()
     {
-        _objectFinder = gameObject.GetComponent<FindObject>();
-        _buttonAction.AddOnChangeListener(PinchTrigger, SteamVR_Input_Sources.LeftHand);
+        _objectFinder = gameObject.AddComponent<FindObject>();
+        _checkCollision = gameObject.AddComponent<CheckCollision>();
+        _buttonAction.AddOnChangeListener(ButtonTriggered, SteamVR_Input_Sources.LeftHand);
     }
 
-    private void PinchTrigger(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool isDown)
+    private void ButtonTriggered(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool isDown)
     {
         if (isDown)
         {
@@ -37,10 +40,13 @@ public class Haptics : MonoBehaviour
         }
     }
 
-	private void Pulse(int pulseAmount, float duration, float frequency, float amplitude, SteamVR_Input_Sources source){
+	IEnumerator Pulse(int pulseAmount, float duration, float frequency, float amplitude, SteamVR_Input_Sources source){
 		for(int i = 0; i < pulseAmount; i++){
 			_hapticOutput.Execute(0,duration,frequency,amplitude,source);
+            print("pulse");
+            yield return new WaitForSeconds(duration);
 		}
+        yield break;
 	}
 
     IEnumerator Radar(GameObject _obj, GameObject _player, SteamVR_Input_Sources source)
@@ -48,8 +54,15 @@ public class Haptics : MonoBehaviour
         while (!false)
         {
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
-            Pulse(1, 0.2f, Mathf.Round(300f/_distToClosest), Mathf.Clamp(1f - (_distToClosest / 10),0f,1f), source);
-            yield return new WaitForSeconds(0.75f);
+            if(_distToClosest >= 0.1)
+            {
+                Pulse(1, 0.2f, Mathf.Clamp(Mathf.Round(320f / _distToClosest), 5, 300), Mathf.Clamp(1f - (_distToClosest / 10), 0f, 1f), source);
+                yield return new WaitForSeconds(0.75f);
+            } else
+            {
+                Pulse(2, 0.75f, 100f, 1f, source);
+                yield break;
+            }
         }
     }
 }
