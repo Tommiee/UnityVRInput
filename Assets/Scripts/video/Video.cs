@@ -42,6 +42,11 @@ public class Video : MonoBehaviour {
 
 	public void Pause() {
 		videoPlayer.Pause();
+
+        if (videoPlayer.isPaused)
+        {
+            Play();
+        }
 	}
 
 	public void Play() {
@@ -63,8 +68,14 @@ public class Video : MonoBehaviour {
 		videoPlayer.playbackSpeed = 1;
 	}
 
-	public void FastForward(float amount) {
-		videoPlayer.playbackSpeed = amount;
+	public void FastForward() {
+        if(videoPlayer.playbackSpeed == 2)
+        {
+            PlayNormal();
+        } else {
+            videoPlayer.playbackSpeed = 2;
+        }
+		
 	}
 
 	private void Update() {

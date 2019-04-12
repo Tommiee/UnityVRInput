@@ -42,7 +42,7 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/TouchpadTouch",
+      "name": "/actions/default/in/touchpadtouch",
       "type": "vector2"
     },
     {

@@ -20,11 +20,11 @@ public class FullscreenPlayMode : MonoBehaviour
     {
         if (EditorApplication.isPlaying)
         {
-            FullScreenGameWindow();
+            //FullScreenGameWindow();
         }
         else
         {
-            CloseGameWindow();
+            //CloseGameWindow();
         }
     }
 

@@ -31,7 +31,7 @@ public class ChangeInteractionState : MonoBehaviour
 		if(SteamVR_Actions._default.Teleport.GetStateDown(SteamVR_Input_Sources.LeftHand)){
 			var currentScreen = _uiSystemScreenRotation.NextScreen();
 			var currentState = _interactionStates[currentScreen.name];
-			_interactionMachine.SetState(currentState);
+			//_interactionMachine.SetState(currentState);
 		}
 	}
 }

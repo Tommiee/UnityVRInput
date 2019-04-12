@@ -14,7 +14,7 @@ public class ViveInput : MonoBehaviour
 		_spawner = gameObject.GetComponent<Spawner>();
 	}
 
-	void Update(){
+	/*void Update(){
 		if(SteamVR_Actions._default.Teleport.GetStateDown(SteamVR_Input_Sources.Any)){
 			_spawner.Spawn(_obj,5);
 		}
@@ -26,5 +26,5 @@ public class ViveInput : MonoBehaviour
 		if(SteamVR_Actions._default.GrabPinch.GetStateDown(SteamVR_Input_Sources.Any)){
 			_spawner.PrintTotal();
 		}
-	}
+	}*/
 }

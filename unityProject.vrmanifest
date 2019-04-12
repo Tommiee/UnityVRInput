@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.vrspawnertests.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "F:\\XR_Lab\\VR Spawner Tests\\actions.json",
+      "action_manifest_path": "C:\\Users\\PHNK 3\\Documents\\GitHub\\mkfdozxsnm\\UnityVRInput\\actions.json",
       "strings": {
         "en_us": {
           "name": "VR Spawner Tests [Testing]"

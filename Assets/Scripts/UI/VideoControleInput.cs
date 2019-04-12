@@ -7,12 +7,14 @@ public class VideoControleInput : MonoBehaviour
 {
     public SteamVR_ActionSet _ActionSet;
     public SteamVR_Input_Sources Hand;
+    private Video _video;
 
     [SerializeField] private bool touchPadButtonMode;
 
     void Start()
     {
         _ActionSet.Activate(Hand, 0, true);
+        _video = GetComponent<Video>();
     }
     void Update()
     {
@@ -24,23 +26,28 @@ public class VideoControleInput : MonoBehaviour
 
     private void TouchpadButtonsControler()
     {
-        Vector2 trackpad = SteamVR_Actions._default.trackpad.GetAxis(Hand);
-        float _touchPadPositionX = trackpad.x;
-        //float _touchPadPositionY = trackpad.y;
+        
 
         if (SteamVR_Actions._default.Teleport.GetStateDown(Hand))
         {
-            //print(_touchPadPositionX + "<>" + _touchPadPositionY + ">>" + trackpad);
+            Vector2 trackpad = SteamVR_Actions._default.touchpadtouch.GetAxis(Hand);
+            float _touchPadPositionX = trackpad.x;
+            //float _touchPadPositionY = trackpad.y;
+
+            print(_touchPadPositionX + ">>" + trackpad);
             if (_touchPadPositionX < -0.5f)
             {
+                _video.Rewind();
                 print("rewind");
             }
             else if (_touchPadPositionX > -0.5f && _touchPadPositionX < 0.5f)
             {
+                _video.Pause();
                 print("pause");
             }
             else if (_touchPadPositionX > 0.5f)
             {
+                _video.FastForward();
                 print("fastforward");
             }
         }
