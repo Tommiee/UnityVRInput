@@ -6,7 +6,7 @@ using UnityEngine;
 public class RayGun : MonoBehaviour
 {
     [SerializeField] private List<Material> _targetMaterials;
-
+    [SerializeField] private ColorFlashlight colorFlashlight;
     public List<Material> TargetMaterials => _targetMaterials;
 
     void Update()
@@ -20,6 +20,7 @@ public class RayGun : MonoBehaviour
         {
             targetMaterial.SetVector("_RayPosition", transform.position);
             targetMaterial.SetVector("_RayDirection", transform.forward);
+            targetMaterial.SetInt("_RayColor", colorFlashlight.GetColorNumber());
         }
         
     }
