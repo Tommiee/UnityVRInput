@@ -4,11 +4,10 @@ using UnityEngine.Video;
 
 public class Video : MonoBehaviour {
 	private VideoPlayer videoPlayer;
-
+	
 	[SerializeField]
 	private VideoClip _video;
 	private bool _rewind = false;
-	public string _videoState;
 
 	void Start() {
 		StartCoroutine(PlayVideo());
@@ -22,7 +21,7 @@ public class Video : MonoBehaviour {
 		videoPlayer.Prepare();
 		videoPlayer.SetDirectAudioMute(0, true);
 
-
+		
 
 		while (!videoPlayer.isPrepared) {
 			Debug.Log("Preparing Video");
@@ -37,23 +36,17 @@ public class Video : MonoBehaviour {
 		}
 	}
 
-
-	public void Normalize() {
-		PlayNormal();
-		_rewind = false;
-	}
-
 	public void ChangeTime(int seconds) {
 		videoPlayer.time = seconds;
 	}
 
 	public void Pause() {
-		Normalize();
 		videoPlayer.Pause();
 
-		if (videoPlayer.isPaused) {
-			Play();
-		}
+        if (videoPlayer.isPaused)
+        {
+            Play();
+        }
 	}
 
 	public void Play() {
@@ -61,7 +54,6 @@ public class Video : MonoBehaviour {
 	}
 
 	public void Rewind() {
-		Normalize();
 		if (_rewind) {
 			videoPlayer.Play();
 			_rewind = false;
@@ -77,8 +69,13 @@ public class Video : MonoBehaviour {
 	}
 
 	public void FastForward() {
-		Normalize();
-		videoPlayer.playbackSpeed = 2;
+        if(videoPlayer.playbackSpeed == 2)
+        {
+            PlayNormal();
+        } else {
+            videoPlayer.playbackSpeed = 2;
+        }
+		
 	}
 
 	private void Update() {
@@ -89,7 +86,5 @@ public class Video : MonoBehaviour {
 		if (videoPlayer.frame <= 0) {
 			_rewind = false;
 		}
-
-
 	}
 }
