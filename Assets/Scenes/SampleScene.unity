@@ -435,7 +435,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f24993a367bb004994412d2bce9a36e, type: 2}
+  - {fileID: 2100000, guid: 7414b75ae9d73bb46a247fbbdb586073, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -849,7 +849,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f24993a367bb004994412d2bce9a36e, type: 2}
+  - {fileID: 2100000, guid: 42515168ff685cf46972348f58835ee2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -946,7 +946,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f24993a367bb004994412d2bce9a36e, type: 2}
+  - {fileID: 2100000, guid: 4f6a8deaea7458f4cb190c79283fecda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1445,7 +1445,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 476540, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.65
+      value: 2.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 476540, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 476540, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.1399
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1513,4 +1521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetMaterials:
   - {fileID: 2100000, guid: 2f24993a367bb004994412d2bce9a36e, type: 2}
+  - {fileID: 2100000, guid: 42515168ff685cf46972348f58835ee2, type: 2}
+  - {fileID: 2100000, guid: 4f6a8deaea7458f4cb190c79283fecda, type: 2}
+  - {fileID: 2100000, guid: 7414b75ae9d73bb46a247fbbdb586073, type: 2}
   colorFlashlight: {fileID: 1052010238}
