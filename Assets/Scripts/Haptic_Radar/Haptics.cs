@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
@@ -17,6 +19,9 @@ public class Haptics : MonoBehaviour
     [SerializeField]
     private GameObject _controller;
 
+    [SerializeField]
+    private GameObject _scanningAnim;
+
     private FindObject _objectFinder;
 
     private void Start()
@@ -34,6 +39,7 @@ public class Haptics : MonoBehaviour
         } else
         {
             StopAllCoroutines();
+            DisableAnim();
         }
     }
 
@@ -54,15 +60,29 @@ public class Haptics : MonoBehaviour
             _distToClosest = Vector3.Distance(_player.transform.position, _obj.transform.position);
             if(_distToClosest >= 0.1)
             {
-                float _freq = Mathf.Clamp(Mathf.Round(320f / _distToClosest), 1, 320);
-                float _amp = Mathf.Clamp(1f - (_distToClosest / 10), 0f, 1f);
-                StartCoroutine(Pulse(1, 0.2f, _freq, _amp, _source));
-                yield return new WaitForSeconds(0.75f);
+                float _freq = Mathf.Clamp(Mathf.Round(280f / _distToClosest), 1, 280);
+                float _waitTime = Mathf.Clamp(0.75f - (0.75f / _distToClosest), 0f, 0.75f);
+                StartCoroutine(Pulse(1, 0.2f, _freq, 0.5f, _source));
+                yield return new WaitForSeconds(_waitTime);
             } else
             {
                 StartCoroutine(Pulse(2, 0.5f, 50f, 1f, _source));
+                PlaceAnim(_player, _obj);
+                //statemachine plug goes here
                 yield break;
             }
         }
+    }
+
+    private void PlaceAnim(GameObject _player, GameObject _target)
+    {
+        _scanningAnim.transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, _target.transform.position.z);
+        _scanningAnim.transform.LookAt(_player.transform);
+        _scanningAnim.SetActive(true);
+    }
+
+    private void DisableAnim()
+    {
+        _scanningAnim.SetActive(false);
     }
 }
