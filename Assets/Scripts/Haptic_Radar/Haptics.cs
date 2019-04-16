@@ -77,7 +77,7 @@ public class Haptics : MonoBehaviour
     private void PlaceAnim(GameObject _player, GameObject _target)
     {
         _scanningAnim.transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, _target.transform.position.z);
-        _scanningAnim.transform.LookAt(_player.transform);
+        _scanningAnim.transform.rotation = Quaternion.LookRotation(_scanningAnim.transform.position - _target.transform.position);
         _scanningAnim.SetActive(true);
     }
 
