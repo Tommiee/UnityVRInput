@@ -61,7 +61,7 @@ public class Haptics : MonoBehaviour
             if(_distToClosest >= 0.1)
             {
                 float _freq = Mathf.Clamp(Mathf.Round(280f / _distToClosest), 1, 280);
-                float _waitTime = Mathf.Clamp(0.75f - (0.75f / _distToClosest), 0f, 0.75f);
+                float _waitTime = Mathf.Clamp(1f - (1f / _distToClosest), 0.10f, 1f);
                 StartCoroutine(Pulse(1, 0.2f, _freq, 0.5f, _source));
                 yield return new WaitForSeconds(_waitTime);
             } else
@@ -76,8 +76,9 @@ public class Haptics : MonoBehaviour
 
     private void PlaceAnim(GameObject _player, GameObject _target)
     {
+        GameObject _camera = GameObject.FindWithTag("MainCamera");
         _scanningAnim.transform.position = new Vector3(_target.transform.position.x, _target.transform.position.y, _target.transform.position.z);
-        _scanningAnim.transform.LookAt(_player.transform);
+        _scanningAnim.transform.LookAt(_camera);
         _scanningAnim.SetActive(true);
     }
 
